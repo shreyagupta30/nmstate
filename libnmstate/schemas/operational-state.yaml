@@ -35,6 +35,7 @@ properties:
             - "$ref": "#/definitions/interface-mac-vlan/rw"
             - "$ref": "#/definitions/interface-mac-vtap/rw"
             - "$ref": "#/definitions/interface-veth/rw"
+            - "$ref": "#/definitions/interface-wireguard/rw"
             - "$ref": "#/definitions/interface-other/rw"
   routes:
     type: object
@@ -716,6 +717,45 @@ definitions:
               type: string
           required:
             - peer
+
+  interface-wireguard:
+    rw:
+      properties:
+        type:
+          type: string
+          enum:
+            - wireguard
+        wireguard:
+          type: object
+          properties:
+            fwmark:
+              type: integer
+            listen-port:
+              type: integer
+            private-key:
+              type: string
+            flags:
+              type: integer
+            peer:
+              type: array
+              items:
+                type: object
+                properties:
+                  allowed-ips:
+                    type: array
+                    items:
+                      type: string
+                  endpoint:
+                    type: string
+                  persistent-keepalive:
+                    type: integer
+                  preshared-key:
+                    type: string
+                  public-key:
+                    type: string
+                  flags:
+                    type: integer
+
   interface-other:
     rw:
       properties:

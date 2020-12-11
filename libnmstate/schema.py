@@ -118,6 +118,7 @@ class InterfaceType:
     VXLAN = "vxlan"
     TEAM = "team"
     VRF = "vrf"
+    WIREGUARD = "wireguard"
     INFINIBAND = "infiniband"
     VETH = "veth"
     OTHER = "other"
@@ -133,6 +134,7 @@ class InterfaceType:
         VETH,
         VLAN,
         VXLAN,
+        WIREGUARD,
     )
 
 
@@ -459,3 +461,19 @@ class Ieee8021X:
     PRIVATE_KEY_PASSWORD = "private-key-password"
     CLIENT_CERT = "client-cert"
     CA_CERT = "ca-cert"
+
+
+class Wireguard:
+    TYPE = InterfaceType.WIREGUARD
+    CONFIG_SUBTREE = "wireguard"
+    FWMARK = "fwmark"
+    LISTEN_PORT = "listen-port"
+    PRIVATE_KEY = "private-key"
+    PEERS = "peers"
+
+    class Peer:
+        ALLOWED_IPS = "allowed-ips"
+        ENDPOINT = "endpoint"
+        PERSISTENT_KEEPALIVE = "persistent-keepalive"
+        PRESHARED_KEY = "preshared-key"
+        PUBLIC_KEY = "public-key"

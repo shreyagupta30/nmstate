@@ -41,6 +41,7 @@ from libnmstate.schema import Team
 from libnmstate.schema import Veth
 from libnmstate.schema import VRF
 from libnmstate.schema import VXLAN
+from libnmstate.schema import Wireguard
 
 
 INTERFACES = Constants.INTERFACES
@@ -1004,3 +1005,31 @@ class TestVeth:
         )
         with pytest.raises(js.ValidationError):
             libnmstate.validator.schema_validate(default_data)
+
+
+class TestWireguard:
+    def test_valid_wireguard_without_config(self, default_data):
+        default_data[Interface.KEY].append(
+            {
+                Interface.NAME: "wireguard0",
+                Interface.TYPE: InterfaceType.WIREGUARD,
+                Wireguard.CONFIG_SUBTREE: {},
+            }
+        )
+        libnmstate.validator.schema_validate(default_data)
+
+    def test_valid_wireguard_with_config(self, default_data):
+        default_data[Interface.KEY].append(
+            {
+                Interface.NAME: "wireguard0",
+                Interface.TYPE: InterfaceType.WIREGUARD,
+                Wireguard.CONFIG_SUBTREE: {
+                    Wireguard.FWMARK: 6,
+                    Wireguard.LISTEN_PORT: 1234,
+                    Wireguard.PRIVATE_KEY: (
+                        "exampleZp5x87cNoRJaHdAOzxrxDfDUn7pGmrY/AmzI="
+                    ),
+                },
+            }
+        )
+        libnmstate.validator.schema_validate(default_data)
